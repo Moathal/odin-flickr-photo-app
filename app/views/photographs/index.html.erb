@@ -1,0 +1,6 @@
+<h1>Photographs of <%= @photographer.name %></h1>
+<div style="display: flex; flex-wrap: wrap; gap: 3em; margin: 3em;">
+  <%= turbo_frame_tag "photographer:#{@photographer.flickr_id}:photos" do %>
+    <%= render @photos %>
+  <% end %>
+</div>
