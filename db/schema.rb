@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_21_103502) do
 
   create_table "photographers", force: :cascade do |t|
     t.string "name"
-    t.string "flickrId"
+    t.string "flickr_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

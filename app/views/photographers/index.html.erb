@@ -1,2 +1,16 @@
-<h1>Photographers#index</h1>
-<p>Find me in app/views/photographers/index.html.erb</p>
+<h1>Photographers</h1>
+<main style="display: flex; flex-direction: column; gap: 2em:">
+    <div>
+    <h3>Add Photographer</h3>
+    <%= form_for Photographer.new, remote: true do |f| %>
+      <%= label_tag :flickr_id, "Insert the User's Flickr ID" %>
+      <%= f.text_field :flickr_id %>
+      <p>https://www.flickr.com/photos/<strong>"FLICKR USER ID IS USUALLY HERE & LOOKS SIMILAR TO THIS [12345678@N01]"</strong></p>
+    <%= f.submit "Add", data: {disable_with: 'Adding...'} %>
+    <% end %>
+  <div>
+    <% @photographers.each do |flickr_user| %>
+      <%= link_to flickr_user.name, photographer_photographs_path(flickr_user.id) %>
+    <% end %>
+  </div>
+</main>

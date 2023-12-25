@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
-  get 'photographers/index'
-  get 'photographers/show'
-  get 'photographs/index'
-  get 'photographs/show'
+
+  require 'sidekiq/web'
+mount Sidekiq::Web => '/sidekiq'
+
+  resources :photographers, only: [:index, :create] do
+    resources :photographs, only: [:index]
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  # root "articles#index"
+  root "photographers#index"
 end

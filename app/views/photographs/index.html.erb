@@ -1,6 +1,7 @@
 <h1>Photographs of <%= @photographer.name %></h1>
 <div style="display: flex; flex-wrap: wrap; gap: 3em; margin: 3em;">
-  <%= turbo_frame_tag "photographer:#{@photographer.flickr_id}:photos" do %>
-    <%= render @photos %>
+  <%= turbo_stream_from "#{@photographer.flickr_id}:photos" %>
+  <%= turbo_frame_tag 'loading_frame' do %>
+    <%= render 'loading' %>
   <% end %>
 </div>

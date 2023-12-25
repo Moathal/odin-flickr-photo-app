@@ -1,11 +1,6 @@
 class PhotographsController < ApplicationController
   def index
-    @photos = []
-    if @photos.empty?
-      PhotoGrabJob.perform(params[:flickr_id])
-      render turbo_stream: turbo_stream.append('photos', partial: 'loading')
-    else
-      render @photos
-    end
+    @photographer = Photographer.find(params[:photographer_id])
+    PhotoGrabJob.perform_async(@photographer.flickr_id)
   end
 end

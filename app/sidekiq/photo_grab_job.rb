@@ -2,7 +2,7 @@ require 'rest-client'
 require 'json'
 
 class PhotoGrabJob
-  include Sidekiq::Job
+  include Sidekiq::Worker
 
   def perform(flickr_id)
     base_url = "https://api.flickr.com/services/rest/"
@@ -13,7 +13,9 @@ class PhotoGrabJob
       format: 'json',
       nojsoncallback: 1
     }
-    @response = RestClient.get("#{base_url}?#{params.to_query}")
-    Turbo::StreamsChannel.broadcast_replace_to("photographer:#{fliker_id}:photos", partial: 'photos', locals: { photos: @response })
+    response = RestClient.get("#{base_url}?#{params.to_query}")
+    response = JSON.parse(response.body)
+    photos = response['photos']['photo']
+    Turbo::StreamsChannel.broadcast_replace_to("#{flickr_id}:photos", partial: 'photographs/photos', locals: { photos: photos}, target: 'loading_frame')
   end
 end
