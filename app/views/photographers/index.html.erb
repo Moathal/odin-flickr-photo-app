@@ -1,0 +1,16 @@
+<h1>Photographers</h1>
+<main style="display: flex; flex-direction: column; gap: 2em:">
+    <div>
+    <h3>Add Photographer</h3>
+    <%= form_for Photographer.new, remote: true do |f| %>
+      <%= label_tag :username, "Insert the User's Flickr Username" %>
+      <%= f.text_field :username %>
+      <p><strong>It apears right under the user's fullname on the user's profile page</strong></p>
+    <%= f.submit "Add", data: {disable_with: 'Adding...'} %>
+    <% end %>
+  <div>
+    <% @photographers.each do |flickr_user| %>
+      <%= link_to flickr_user.name, photographer_photographs_path(flickr_user.id) %>
+    <% end %>
+  </div>
+</main>

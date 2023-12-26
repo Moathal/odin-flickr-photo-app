@@ -1,0 +1,13 @@
+<h1>Photographs of <%= @photographer.name %></h1>
+<main style="width: 100%">
+  <div style="display: flex; flex-wrap: wrap; gap: 0.5em; margin: 3em; align-items: center; justify-content: center;" >
+    <%= turbo_stream_from "#{@photographer.flickr_id}:photos" %>
+    <%= turbo_frame_tag 'loading_frame', style: "display: flex; flex-wrap: wrap; gap: 0.5em; margin: 3em; align-items: center; justify-content: center;" do %>
+      <% if @photos.nil? %>
+        <%= render 'loading' %>
+      <% else %>
+        <%= render 'photos', photos: @photos %>
+      <% end %>
+    <% end %>
+  </div>  
+</main>
