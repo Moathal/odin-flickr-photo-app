@@ -3,9 +3,9 @@
     <div>
     <h3>Add Photographer</h3>
     <%= form_for Photographer.new, remote: true do |f| %>
-      <%= label_tag :flickr_id, "Insert the User's Flickr ID" %>
-      <%= f.text_field :flickr_id %>
-      <p>https://www.flickr.com/photos/<strong>"FLICKR USER ID IS USUALLY HERE & LOOKS SIMILAR TO THIS [12345678@N01]"</strong></p>
+      <%= label_tag :username, "Insert the User's Flickr Username" %>
+      <%= f.text_field :username %>
+      <p><strong>It apears right under the user's fullname on the user's profile page</strong></p>
     <%= f.submit "Add", data: {disable_with: 'Adding...'} %>
     <% end %>
   <div>

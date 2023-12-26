@@ -15,7 +15,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_21_103502) do
   enable_extension "plpgsql"
 
   create_table "photographers", force: :cascade do |t|
+    t.string "username"
     t.string "name"
+    t.string "nsid"
     t.string "flickr_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
