@@ -5,10 +5,6 @@ class PhotographersController < ApplicationController
   def index
     @photographers = Photographer.all
   end
-
-  def new
-    @photographer = Photographer.new
-  end
   
   def create
     username = photographer_params[:username]
@@ -16,15 +12,15 @@ class PhotographersController < ApplicationController
     nsid = response['user']['nsid']
     flickr_id = response['user']['id']
     @photographer = Photographer.new(flickr_id: flickr_id, nsid: nsid, username: username)
-    @photographer.name = get_name_from_api :nsid
+    name = get_name_from_api(nsid)
+    @photographer.name = name
     if @photographer.save
       flash[:success] = "Photographer successfully added!"
-      redirect_to photographer_photographs_path(@photographer.flickr_id)
+      redirect_to photographer_photographs_path(@photographer.id)
     else
       flash[:error] = "Something went wrong"
-      render 'new'
+      redirect_to photographers_path
     end
-    puts "API_RESPONSE:- #{get_name_from_api}"
   end
 
   def get_id_from_api
@@ -50,7 +46,6 @@ class PhotographersController < ApplicationController
       nojsoncallback: 1
     }
   }
-
   response = JSON.parse(response)
   response['person']['realname']['_content']
   end
